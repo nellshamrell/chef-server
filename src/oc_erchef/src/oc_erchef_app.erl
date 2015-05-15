@@ -10,6 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
+    mini_s3:create_pool(),
     case os:getenv("DEVVM") of
         "1" ->
             application:start(sync);

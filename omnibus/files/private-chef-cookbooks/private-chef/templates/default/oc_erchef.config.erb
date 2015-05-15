@@ -170,6 +170,17 @@
                   {s3_parallel_ops_fanout, <%= node['private_chef']['opscode-erchef']['s3_parallel_ops_fanout'] %>},
                   {depsolver_timeout, <%= @depsolver_timeout %>}
                  ]},
+  {mini_s3, [
+               {service, [{root_url, "<%= node['private_chef']['nginx']['x_forwarded_proto'] %>://<%= @helper.vip_for_uri('bookshelf') %>" },
+                          {timeout, <%= node['private_chef']['opscode-erchef']['mini_s3_timeout'] %>},
+                          {init_count, <%= node['private_chef']['mini_s3']['http_init_count'] %>},
+                          {max_count, <%= node['private_chef']['mini_s3']['http_max_count'] %>},
+                          {cull_interval, <%= node['private_chef']['mini_s3']['http_cull_interval'] %>},
+                          {max_age, <%= node['private_chef']['mini_s3']['http_max_age'] %>},
+                          {max_connection_duration, <%= node['private_chef']['mini_s3']['http_max_connection_duration'] %>},
+                          {ibrowse_options, <%= node['private_chef']['mini_s3']['ibrowse_options'] %>}
+                         ]}
+            ]},
   {stats_hero, [
                %% Set sender pool size to DB max_connections to avoid contention
                {udp_socket_pool_size, <%= node['private_chef']['postgresql']['max_connections'] %> },

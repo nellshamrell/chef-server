@@ -202,6 +202,7 @@ default['private_chef']['opscode-erchef']['keygen_cache_workers'] = :auto
 default['private_chef']['opscode-erchef']['keygen_timeout'] = 1000
 default['private_chef']['opscode-erchef']['keygen_key_size'] = 2048
 default['private_chef']['opscode-erchef']['strict_search_result_acls'] = false
+default['private_chef']['opscode-erchef']['mini_s3_timeout'] = 2000
 
 ###
 # Legacy path (required for cookbok migration)
@@ -436,6 +437,16 @@ default['private_chef']['oc_chef_authz']['http_cull_interval'] = "{1, min}"
 default['private_chef']['oc_chef_authz']['http_max_age'] = "{70, sec}"
 default['private_chef']['oc_chef_authz']['http_max_connection_duration'] = "{70, sec}"
 default['private_chef']['oc_chef_authz']['ibrowse_options'] = "[{connect_timeout, 5000}]"
+
+####
+# Mini S3 settings for oc_erchef calls to bookshelf
+####
+default['private_chef']['mini_s3']['http_init_count'] = 25
+default['private_chef']['mini_s3']['http_max_count'] = 100
+default['private_chef']['mini_s3']['http_cull_interval'] = "{1, min}"
+default['private_chef']['mini_s3']['http_max_age'] = "{70, sec}"
+default['private_chef']['mini_s3']['http_max_connection_duration'] = "{70, sec}"
+default['private_chef']['mini_s3']['ibrowse_options'] = "[{connect_timeout, 5000}]"
 
 ####
 # Bookshelf
