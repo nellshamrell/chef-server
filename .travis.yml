@@ -3,6 +3,7 @@
 # luarocks is added to the apt package whitelist:
 #   https://github.com/travis-ci/travis-ci/issues/3716
 #
+sudo: false
 branches:
   only:
     - master
@@ -14,7 +15,7 @@ cache:
     - $HOME/.cpanm
     - $HOME/.cpan
     - $HOME/perl5
-sudo: false
+    - $HOME/libgecode
 language: erlang
 otp_release:
   - R16B03-1
@@ -32,8 +33,9 @@ env:
     - PERL5LIB=~/perl5/lib/perl5/x86_64-linux-gnu-thread-multi:~/perl5/lib/perl5:/etc/perl:/usr/local/lib/perl/5.14.2:/usr/local/share/perl/5.14.2:/usr/lib/perl5:/usr/share/perl5:/usr/lib/perl/5.14:/usr/share/perl/5.14:/usr/local/lib/site_perl
     - USE_OMNIBUS_FILES=0
 #    - LUALIB=~/.luarocks/lib/lua/5.2
+    - GECODE_VERSION=3.7.3
   matrix:
-  - COMPONENT=omnibus
+    # - COMPONENT=omnibus
   - COMPONENT=src/oc_erchef
   - COMPONENT=src/oc-id
   - COMPONENT=src/chef-mover
@@ -44,6 +46,9 @@ install:
 #  - eval $(luarocks path)
   - rvm install --binary 2.1.4
   - rvm use 2.1.4
-  - cd $COMPONENT && travis_retry make install
+  - cpanm --notest --local-lib=$HOME/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+  - cpanm --notest --quiet App::Sqitch
+  - cd $COMPONENT && LIBRARY_PATH=libgecode/$(GECODE_VERSION)/lib travis_retry make install
+
 script:
-  - make travis
+  - USE_SYSTEM_GECODE=1 LD_LIBRARY_PATH=libgecode/$GECODE_VERSION/lib make travis

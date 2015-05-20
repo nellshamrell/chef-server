@@ -53,11 +53,53 @@ bundle:
 	@echo bundling up depselector, This might take a while...
 	@cd apps/chef_objects/priv/depselector_rb; bundle install --deployment --path .bundle
 
-install:
-	@./rebar get-deps -C rebar.config.lock
-	@cpanm --notest --quiet App::Sqitch
+### These are targets specific to the travis environment that allow us to
+### cache   the libgecode installation, avoiding the need to rebuild it every time.
 
+GECODE_VERSION?=3.7.3
+
+GECODE_FILE=gecode-$(GECODE_VERSION).tar.gz
+GECODE_SRC_DIR=gecode-$(GECODE_VERSION)
+GECODE_LIB_DIR=libgecode/$(GECODE_VERSION)/lib
+GECODE_URL=http://www.gecode.org/download/$(GECODE_FILE)
+
+ifeq ($(TRAVIS),true)
+ifeq "$(wildcard $(GECODE_LIB_DIR))" ""
+GECODE_INSTALL := install_libgecode
+else
+GECODE_INSTALL := no_gecode_needed
+endif
+else
+GECODE_INSTALL := no_gecode_without_travis
+endif
+
+no_gecode_needed:
+	@echo "You already have $(GECODE_LIB_DIR), bypassing make and install"
+
+no_gecode_without_travis:
+	@echo "Bypassing gecode install for non-travis build"
+
+download_libgecode:
+	@echo "Downloading libgecode sources from $(GECODE_URL)"
+	-wget $(GECODE_URL)
+
+extract_libgecode: download_libgecode
+	@tar xf $(GECODE_FILE)
+
+configure_libgecode: extract_libgecode
+	cd $(GECODE_SRC_DIR) && ./configure --prefix=$(GECODE_LIB_DIR) --disable-doc-dot --disable-doc-serach --disable-doc-tagfile --disable-doc-chm --disable-docset --disable-qt --disable-examples --disable-flatzinca
+
+build_libgecode: configure_libgecode
+	cd $(GECODE_SRC_DIR) && $(MAKE)
+
+install_libgecode: build_libgecode
+	cd $(GECODE_SRC_DIR) && $(MAKE) install
+
+install: $(GECODE_INSTALL)
+	@./rebar get-deps -C rebar.config.lock
+blarg:
+	echo "$(GECODE_INSTALL)"
 travis: all
-	PATH=~/perl5/bin:$(PATH) $(REBARC) skip_deps=true ct
+	 PATH=~/perl5/bin:$(PATH) $(REBARC) skip_deps=true ct
 
 DEVVM_DIR = $(DEVVM_ROOT)/_rel/oc_erchef
