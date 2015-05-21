@@ -19,7 +19,7 @@ cache:
     - $HOME/.bundle
 before_cache:
   # Prevent build log from changing cache cand causing repackage
-  - rm -f $HOME/cpanm/work/*/build.log
+  - rm -f $HOME/.cpanm/work/*/build.log
 language: erlang
 otp_release:
   - R16B03-1
