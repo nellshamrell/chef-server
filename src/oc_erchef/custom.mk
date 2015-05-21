@@ -97,8 +97,7 @@ install_libgecode: build_libgecode
 
 install: $(GECODE_INSTALL)
 	@./rebar get-deps -C rebar.config.lock
-blarg:
-	echo "$(GECODE_INSTALL)"
+
 travis: all
 	 PATH=~/perl5/bin:$(PATH) $(REBARC) skip_deps=true ct
 

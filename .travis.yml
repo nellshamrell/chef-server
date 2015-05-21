@@ -48,7 +48,7 @@ install:
   - rvm use 2.1.4
   - cpanm --notest --local-lib=$HOME/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
   - cpanm --notest --quiet App::Sqitch
-  - cd $COMPONENT && LIBRARY_PATH=libgecode/$(GECODE_VERSION)/lib travis_retry make install
+  - cd $COMPONENT && LIBRARY_PATH=libgecode/$GECODE_VERSION/lib travis_retry make install
 
 script:
   - USE_SYSTEM_GECODE=1 LD_LIBRARY_PATH=libgecode/$GECODE_VERSION/lib make travis
