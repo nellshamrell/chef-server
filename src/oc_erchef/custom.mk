@@ -60,7 +60,7 @@ GECODE_VERSION?=3.7.3
 
 GECODE_FILE=gecode-$(GECODE_VERSION).tar.gz
 GECODE_SRC_DIR=gecode-$(GECODE_VERSION)
-GECODE_LIB_DIR=libgecode/$(GECODE_VERSION)/lib
+GECODE_LIB_DIR=$(HOME)/libgecode/$(GECODE_VERSION)/lib
 GECODE_URL=http://www.gecode.org/download/$(GECODE_FILE)
 
 ifeq ($(TRAVIS),true)
