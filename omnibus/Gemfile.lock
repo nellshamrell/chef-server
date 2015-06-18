@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/opscode/omnibus-software.git
-  revision: 8b0ebc7691d854f9b287107c4b3afca9caf4b9b4
-  specs:
-    omnibus-software (4.0.0)
-
-GIT
   remote: git://github.com/opscode/omnibus.git
   revision: 5ed5e5bfd7c99de66c46aede110cefe1d5d997ac
   specs:
@@ -17,6 +11,13 @@ GIT
       ruby-progressbar (~> 1.7)
       thor (~> 0.18)
       uber-s3
+
+GIT
+  remote: https://github.com/chef/omnibus-software.git
+  revision: b23a9306133115d7406c5e603a54b36facf7c4f6
+  branch: shain/fips
+  specs:
+    omnibus-software (4.0.0)
 
 GEM
   remote: https://rubygems.org/

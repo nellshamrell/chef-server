@@ -2,5 +2,5 @@ source 'https://rubygems.org'
 
 # Install omnibus software
 gem 'omnibus', github: 'opscode/omnibus'
-gem 'omnibus-software', github: 'opscode/omnibus-software'
+gem 'omnibus-software', :git => 'https://github.com/chef/omnibus-software.git', :branch => 'shain/fips'
 gem 'rake'
