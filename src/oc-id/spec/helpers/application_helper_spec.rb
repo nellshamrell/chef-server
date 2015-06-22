@@ -12,12 +12,12 @@ describe ApplicationHelper do
   describe '#error_message_for' do
     it 'includes the attribute name in the message' do
       user.update_password(:password => 'haha')
-      expect(helper.error_message_for(user, :new_password)).to eql('<span class="label radius alert">New Password must not be blank.</span>')
+      expect(helper.error_message_for(user, :new_password)).to eql('<small class="error">New Password must not be blank.</small>')
     end
 
     it 'works for base attributes too' do
       user.update_password(:new_password => 'haha', :password_confirmation => 'nope')
-      expect(helper.error_message_for(user, :base)).to eql('<span class="label radius alert">The password you entered does not match the confirmation password.</span>')
+      expect(helper.error_message_for(user, :base)).to eql('<small class="error">The password you entered does not match the confirmation password.</small>')
     end
   end
 end

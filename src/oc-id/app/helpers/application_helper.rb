@@ -9,7 +9,7 @@ module ApplicationHelper
     msgs = model.errors[attr]
 
     if msgs.present?
-      content_tag(:span, msgs.join("\n"), :class => 'label radius alert')
+      content_tag(:small, msgs.join("\n"), :class => 'error')
     end
   end
 
