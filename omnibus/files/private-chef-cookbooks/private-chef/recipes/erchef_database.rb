@@ -38,23 +38,23 @@ end
 
 # Create Database Users
 
-private_chef_pg_user node['private_chef']['postgresql']['sql_user'] do
-  password node['private_chef']['postgresql']['sql_password']
+private_chef_pg_user node['private_chef']['opscode-erchef']['sql_user'] do
+  password node['private_chef']['opscode-erchef']['sql_password']
   superuser false
 end
 
-private_chef_pg_user_table_access node['private_chef']['postgresql']['sql_user'] do
+private_chef_pg_user_table_access node['private_chef']['opscode-erchef']['sql_user'] do
   database 'opscode_chef'
   schema 'public'
   access_profile :write
 end
 
-private_chef_pg_user node['private_chef']['postgresql']['sql_ro_user'] do
-  password node['private_chef']['postgresql']['sql_ro_password']
+private_chef_pg_user node['private_chef']['opscode-erchef']['sql_ro_user'] do
+  password node['private_chef']['opscode-erchef']['sql_ro_password']
   superuser false
 end
 
-private_chef_pg_user_table_access node['private_chef']['postgresql']['sql_ro_user'] do
+private_chef_pg_user_table_access node['private_chef']['opscode-erchef']['sql_ro_user'] do
   database 'opscode_chef'
   schema 'public'
   access_profile :read
